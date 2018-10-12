@@ -187,6 +187,16 @@ void clear_log_level_list()
 void IRAM_ATTR esp_log_write(esp_log_level_t level,
         const char* tag,
         const char* format, ...)
+{    
+    va_list list;
+    va_start(list, format);
+    esp_log_vwrite(level, tag, format, list);
+    va_end(list);
+}
+
+void IRAM_ATTR esp_log_vwrite(esp_log_level_t level,
+        const char* tag,
+        const char* format, va_list list)
 {
     if (!s_log_mutex) {
         s_log_mutex = xSemaphoreCreateMutex();
@@ -209,11 +219,8 @@ void IRAM_ATTR esp_log_write(esp_log_level_t level,
     if (!should_output(level, level_for_tag)) {
         return;
     }
-
-    va_list list;
-    va_start(list, format);
+    
     (*s_log_print_func)(format, list);
-    va_end(list);
 }
 
 static inline bool get_cached_log_level(const char* tag, esp_log_level_t* level)

@@ -106,6 +106,19 @@ uint32_t esp_log_early_timestamp(void);
  */
 void esp_log_write(esp_log_level_t level, const char* tag, const char* format, ...) __attribute__ ((format (printf, 3, 4)));
 
+/**
+ * @brief Write message into the log using a va_list
+ *
+ * This function is identical to esp_log_write, except that it supports
+ * being wrapped by a caller, due to its use of a va_list argument. It
+ * is analogous to vprintf and printf.
+ *
+ * This function or these macros should not be used from an interrupt.
+ *
+ * Added by JC
+ */
+void esp_log_vwrite(esp_log_level_t level, const char* tag, const char* format, va_list list);
+
 /** @cond */
 
 #include "esp_log_internal.h"
@@ -230,8 +243,8 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
 #define LOG_COLOR_E       LOG_COLOR(LOG_COLOR_RED)
 #define LOG_COLOR_W       LOG_COLOR(LOG_COLOR_BROWN)
 #define LOG_COLOR_I       LOG_COLOR(LOG_COLOR_GREEN)
-#define LOG_COLOR_D
-#define LOG_COLOR_V
+#define LOG_COLOR_D       LOG_COLOR(LOG_COLOR_CYAN)
+#define LOG_COLOR_V       LOG_COLOR(LOG_COLOR_PURPLE)
 #else //CONFIG_LOG_COLORS
 #define LOG_COLOR_E
 #define LOG_COLOR_W
@@ -241,7 +254,12 @@ void esp_log_write(esp_log_level_t level, const char* tag, const char* format, .
 #define LOG_RESET_COLOR
 #endif //CONFIG_LOG_COLORS
 
-#define LOG_FORMAT(letter, format)  LOG_COLOR_ ## letter #letter " (%d) %s: " format LOG_RESET_COLOR "\n"
+// <JC> Add a colour so that user-level messages stand out against the system-level logs
+#define LOG_COLOR_J "\033[1;34m"
+
+// <JC> Changed the format to support line updating after the fact; timestamps also line up better
+#define LOG_FORMAT_PARTIAL(letter, format)  LOG_COLOR_ ## letter "[%-7d] %s: " format LOG_RESET_COLOR
+#define LOG_FORMAT(letter, format) LOG_FORMAT_PARTIAL(letter, format) "\n"
 
 /** @endcond */
 
