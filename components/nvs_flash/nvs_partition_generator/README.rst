@@ -7,6 +7,13 @@ Introduction
 :component_file:`nvs_flash/nvs_partition_generator/nvs_partition_gen.py` utility is designed to help create a binary file, compatible with NVS architecture defined in :doc:`Non-Volatile Storage </api-reference/storage/nvs_flash>`, based on user provided key-value pairs in a CSV file.
 Utility is ideally suited for generating a binary blob, containing data specific to ODM/OEM, which can be flashed externally at the time of device manufacturing. This helps manufacturers set unique value for various parameters for each device, e.g. serial number, while using same application firmware for all devices.
 
+Prerequisites
+-------------
+To use this utility in encryption mode, the following packages need to be installed:
+    - cryptography package
+
+This dependency is already captured by including these packages in `requirement.txt` in top level IDF directory.
+
 CSV file format
 ---------------
 
@@ -45,6 +52,16 @@ NVS Entry and Namespace association
 When a new namespace entry is encountered in the CSV file, each follow-up entries will be part of that namespace, until next namespace entry is found, in which case all the follow-up entries will be part of the new namespace.
 
 .. note:: First entry in a CSV file should always be ``namespace`` entry.
+
+Multipage Blob Support
+----------------------
+
+By default, binary blobs are allowed to span over multiple pages and written in the format mentioned in section :ref:`structure_of_entry`. 
+If older format is intended to be used, the utility provides an option to disable this feature.
+
+Encryption Support
+-------------------
+This utility allows you to create an enrypted binary file also. Encryption used is AES-XTS encryption. Refer to :ref:`nvs_encryption` for more details.
 
 Running the utility
 -------------------

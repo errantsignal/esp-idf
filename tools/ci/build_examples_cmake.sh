@@ -65,7 +65,7 @@ RESULT_ISSUES=22  # magic number result code for issues found
 LOG_SUSPECTED=${LOG_PATH}/common_log.txt
 touch ${LOG_SUSPECTED}
 
-EXAMPLE_PATHS=$( find ${IDF_PATH}/examples/ -type f -name CMakeLists.txt | grep -v "/components/" | sort )
+EXAMPLE_PATHS=$( find ${IDF_PATH}/examples/ -type f -name CMakeLists.txt | grep -v "/components/" | grep -v "/main/" | sort )
 
 if [ $# -eq 0 ]
 then
@@ -88,8 +88,8 @@ else
     [ -z ${NUM_OF_JOBS} ] && die "NUM_OF_JOBS is bad"
 
     # count number of examples
-    NUM_OF_EXAMPLES=$(echo ${EXAMPLE_PATHS} | wc -l )
-    [ -z ${NUM_OF_EXAMPLES} ] && die "NUM_OF_EXAMPLES is bad"
+    NUM_OF_EXAMPLES=$( echo "${EXAMPLE_PATHS}" | wc -l )
+    [ ${NUM_OF_EXAMPLES} -lt 80 ] && die "NUM_OF_EXAMPLES is bad"
 
     # separate intervals
     #57 / 5 == 12
