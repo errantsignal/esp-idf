@@ -1224,7 +1224,51 @@ UT_010_04:
     - UT_T1_RMT
     - psram
 
+UT_017_01:
+  <<: *unit_test_template
+  tags:
+    - ESP32_IDF
+    - UT_T2_1
+
+UT_017_02:
+  <<: *unit_test_template
+  tags:
+    - ESP32_IDF
+    - UT_T2_1
+
+UT_017_03:
+  <<: *unit_test_template
+  tags:
+    - ESP32_IDF
+    - UT_T2_1
+
+UT_017_04:
+  <<: *unit_test_template
+  tags:
+    - ESP32_IDF
+    - UT_T2_1
+    - psram
+
+UT_017_05:
+  <<: *unit_test_template
+  tags:
+    - ESP32_IDF
+    - UT_T2_1
+    - 8Mpsram
+
 UT_601_01:
+  <<: *unit_test_template
+  tags:
+    - ESP32_IDF
+    - UT_T1_1
+
+UT_601_02:
+  <<: *unit_test_template
+  tags:
+    - ESP32_IDF
+    - UT_T1_1
+
+UT_601_03:
   <<: *unit_test_template
   tags:
     - ESP32_IDF
@@ -1380,6 +1424,18 @@ IT_006_05:
     - ESP32_IDF
     - SSC_T1_6
 
+IT_006_06:
+  <<: *test_template
+  tags:
+    - ESP32_IDF
+    - SSC_T1_6
+
+IT_006_07:
+  <<: *test_template
+  tags:
+    - ESP32_IDF
+    - SSC_T1_6
+
 IT_007_01:
   <<: *test_template
   tags:
@@ -1387,6 +1443,12 @@ IT_007_01:
     - SSC_T1_7
 
 IT_007_02:
+  <<: *test_template
+  tags:
+    - ESP32_IDF
+    - SSC_T1_7
+
+IT_007_03:
   <<: *test_template
   tags:
     - ESP32_IDF
@@ -1417,6 +1479,12 @@ IT_011_01:
     - SSC_T50_1
 
 IT_012_01:
+  <<: *test_template
+  tags:
+    - ESP32_IDF
+    - SSC_T1_9
+
+IT_012_02:
   <<: *test_template
   tags:
     - ESP32_IDF
