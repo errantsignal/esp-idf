@@ -30,10 +30,6 @@
 	path = components/libsodium/libsodium
 	url = https://github.com/jedisct1/libsodium.git
 
-[submodule "components/spiffs/spiffs"]
-	path = components/spiffs/spiffs
-	url = https://github.com/pellepl/spiffs.git
-
 [submodule "components/json/cJSON"]
 	path = components/json/cJSON
 	url = https://github.com/DaveGamble/cJSON.git
